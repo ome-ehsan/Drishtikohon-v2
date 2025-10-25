@@ -1,0 +1,129 @@
+Drishtikohon - Project Context (Concise + Comprehensive)
+
+1) What this project is
+- Drishtikohon is an accessible mobile app (Expo + React Native + expo-router) featuring a secure, voice-assisted PIN login, balance viewing, send money, mobile recharge, OTP verification, and an on-screen magnifier overlay for low-vision users.
+- Accessibility is emphasized: haptics, tones + TTS feedback, screen reader labels/roles, and large, high-contrast UI where appropriate.
+
+2) Tech stack
+- Expo + React Native, expo-router (file-based routing), TypeScript/JavaScript mix
+- expo-speech (TTS), expo-haptics, expo-av (audio), react-native-reanimated (animations)
+- react-native-view-shot (screen capture for magnifier)
+
+3) High-level app flow
+- Root layout mounts providers and stack (app/_layout.js), plays a welcome TTS.
+- Login (app/index.js) collects a 4-digit PIN with tones + spoken progress and validates via AppContext.
+- On success, user navigates to the main experience (dashboard + transactional flows).
+- Parallax demo screens live under app/(tabs)/ as template examples.
+- Magnifier overlay can be invoked and dragged to zoom any on-screen content.
+
+4) Directory structure (selected)
+- app/
+  - _layout.js: Root provider tree and stack, magnifier overlay wrapper
+  - (tabs)/
+    - _layout.tsx: Tab navigator configuration (icons, haptic tab)
+    - index.tsx: Parallax header sample (welcome + getting started)
+    - explore.tsx: Parallax header sample (collapsibles with docs links)
+  - index.js: PIN login (tones/haptics/TTS)
+  - balance.js: Balance viewing
+  - dashboard.js: Entry hub after login
+  - mobile-recharge.js: Recharge flow
+  - modal.tsx: Example modal
+  - otp-verification.js: OTP entry/validation
+  - send-money.js: Send money flow
+  - settings.js: Settings (language, accessibility toggles)
+- assets/
+  - images/, operators/, sounds/: App images, operator logos, audio tones
+- components/
+  - external-link.tsx: Opens external URLs (in-app on native)
+  - haptic-tab.tsx: Adds haptics to tab presses on iOS
+  - hello-wave.tsx: Reanimated waving-hand example
+  - MagnifierOverlay.js: Drag-to-zoom overlay using view-shot image
+  - parallax-scroll-view.tsx: Parallax header wrapper with animated transforms
+  - themed-text.tsx: Theme-aware text variants
+  - themed-view.tsx: Theme-aware container view
+  - ui/icon-symbol.tsx: Cross-platform icon mapping (SF → Material)
+  - ui/collapsible.tsx: Collapsible content container
+- constants/
+  - theme.ts: Light/dark color tokens and platform font families
+- context/
+  - AppContext.js: Global language/auth/transactions; PIN/OTP validation
+  - MagnifierContext.js: Root capture ref + magnifier enabled state
+- hooks/
+  - use-color-scheme.ts(.web.ts): System scheme detection
+  - use-theme-color.ts: Resolve themed colors by key
+- utils/
+  - audio.js: Plays digit tones then sequences TTS; can stop audio
+  - speech.js: TTS speak/stop helpers with defaults
+  - translations.js: en/bn string tables + t(key, lang) helper
+- scripts/
+  - reset-project.js: Move current app dir to app-example
+
+5) File-by-file descriptions (1–2 lines)
+- app/_layout.js: Wraps app with AppProvider/MagnifierProvider; plays localized welcome; renders Stack and MagnifierOverlay within a ViewShot root.
+- app/(tabs)/_layout.tsx: Sets up bottom tabs; uses HapticTab button; icons from IconSymbol; colors from theme.
+- app/(tabs)/index.tsx: Parallax sample screen with getting-started instructions.
+- app/(tabs)/explore.tsx: Parallax sample with Collapsible sections linking to docs.
+- app/index.js: Accessible PIN keypad; tones for digits, non-sensitive spoken progress; auto-submit at 4 digits.
+- app/balance.js: Reads balance from context and displays with themed UI.
+- app/dashboard.js: Main hub for actions/navigation.
+- app/mobile-recharge.js: Operator selection and amount entry; creates recharge transaction.
+- app/modal.tsx: Example modal route using expo-router.
+- app/otp-verification.js: OTP entry and validation against mock OTP from context.
+- app/send-money.js: Receiver number + amount; processes transfer via context.
+- app/settings.js: Language selection and screen hide mode toggles.
+- components/external-link.tsx: Uses in-app browser on native; standard Link on web.
+- components/haptic-tab.tsx: iOS haptic feedback on tab press-in.
+- components/hello-wave.tsx: Animated waving hand using reanimated.
+- components/MagnifierOverlay.js: PanResponder-driven lens; captures root view; zooms/positions image; crosshair overlay.
+- components/parallax-scroll-view.tsx: Animated parallax header (translate/scale) and padded content area.
+- components/themed-text.tsx: Text variants (title/subtitle/default/link) with theme-aware color.
+- components/themed-view.tsx: View with theme-aware background color.
+- components/ui/icon-symbol.tsx: SF Symbols names mapped to MaterialIcons on Android/web.
+- components/ui/collapsible.tsx: Expand/collapse UI used in Explore screen.
+- constants/theme.ts: Color palette and platform-specific font families.
+- context/AppContext.js: Language persistence (AsyncStorage), PIN/OTP validation, balance, transactions.
+- context/MagnifierContext.js: Provides capture ref and toggle for magnifier.
+- hooks/use-color-scheme.ts(.web.ts): Reads OS color scheme.
+- hooks/use-theme-color.ts: Returns themed color by key (text/background/etc.).
+- utils/audio.js: Orchestrates tone → TTS sequence per digit; stopAllAudio to cancel ongoing audio.
+- utils/speech.js: speak/stop wrappers (language mapping en-US/bn-BD; defaults).
+- utils/translations.js: i18n string maps for en/bn and t() helper.
+- scripts/reset-project.js: Project reset helper.
+
+6) Important key functions (by file)
+- app/index.js (Login)
+  - handleNumberPress(number): Appends digit, vibrates, plays tone, then speaks progress; auto-submits at 4 digits.
+  - handleBackspace(): Vibrates, cancels audio, speaks removal status with remaining digits.
+  - handleSubmit(pin): Speaks submit, validates via context; navigates to /dashboard on success.
+- context/AppContext.js
+  - validatePin(pin): Returns true if matches mock PIN.
+  - validateOtp(otp): Returns true if matches mock OTP.
+  - processTransaction(receiver, amount, type): Ensures funds, deducts balance, appends transaction.
+  - processRechargeTransaction(phoneNumber, amount, operator): Recharge transaction with validations and record append.
+  - getBalance(): Returns current user balance.
+  - changeLanguage(newLang): Persists and switches language (AsyncStorage).
+- components/MagnifierOverlay.js
+  - captureScreen(x, y): Captures root view image for magnification at the touch point.
+  - PanResponder lifecycle: Grants, moves (updates position), releases (deactivates lens).
+- utils/audio.js
+  - playToneThenSpeak(digit, text, lang): Loads tone by digit, plays it fully, then speaks provided text.
+  - stopAllAudio(): Stops TTS and any loaded/playing sound, unloads the sound.
+- utils/speech.js
+  - speak(text, langCode, options): Stops any previous utterance; speaks with language defaults.
+  - stopSpeak(): Stops ongoing speech immediately.
+- components/external-link.tsx
+  - ExternalLink: Wraps Link; on native, prevents default and opens in an in-app browser.
+- components/parallax-scroll-view.tsx
+  - ParallaxScrollView: Interpolates translateY and scale based on scroll offset; slots header image and children.
+
+7) Accessibility highlights
+- Interactive elements carry roles and labels; error states use alert roles; keypad announces context (not digits).
+- Magnifier lens improves readability for low-vision users; gesture layer is clearly labeled.
+- Theming supports light/dark; text and backgrounds follow high-contrast defaults.
+
+8) Extending the app safely
+- Add routes under app/ to create new screens; keep logic in context where possible.
+- Localize display strings via utils/translations.js (thread language from AppContext).
+- For audio/TTS UX, always stop ongoing audio before speaking new content.
+
+End of file.

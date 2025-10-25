@@ -1,0 +1,47 @@
+{
+  "expo": {
+    "name": "Drishtikohon",
+    "slug": "Drishtikohon",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/appIcon2.png",
+    "scheme": "drishtikohon",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#001f3f",
+        "foregroundImage": "./assets/images/appIcon2.png"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/images/appIcon2.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/appIcon2.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#001f3f",
+          "dark": {
+            "image": "./assets/images/appIcon2.png",
+            "backgroundColor": "#001f3f"
+          }
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}
