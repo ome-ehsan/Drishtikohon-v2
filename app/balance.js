@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import React, { useContext, useEffect } from 'react';
 import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
 import { AppContext } from '../context/AppContext';
-import { speak } from '../utils/speech';
+import { registerInteraction, speak } from '../utils/speech';
 import { t } from '../utils/translations';
 
 export default function BalanceScreen() {
@@ -43,7 +43,10 @@ export default function BalanceScreen() {
   // Animated button component (reuse dashboard style)
   const ActionButton = ({ icon, label, onPress, accessibilityLabel, hint, secondary }) => {
     const scale = new Animated.Value(1);
-    const onPressIn = () => Animated.spring(scale, { toValue: 0.96, useNativeDriver: true }).start();
+    const onPressIn = () => {
+      registerInteraction(); // Register button interaction for TalkBack timing
+      Animated.spring(scale, { toValue: 0.96, useNativeDriver: true }).start();
+    };
     const onPressOut = () => Animated.spring(scale, { toValue: 1, useNativeDriver: true }).start();
 
     return (

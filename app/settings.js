@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import React, { useContext, useEffect } from 'react';
 import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
 import { AppContext } from '../context/AppContext';
-import { speak } from '../utils/speech';
+import { registerInteraction, speak } from '../utils/speech';
 import { t } from '../utils/translations';
 
 export default function SettingsScreen() {
@@ -33,8 +33,10 @@ export default function SettingsScreen() {
   const OptionButton = ({ icon, label, active, onPress, accessibilityLabel, hint }) => {
     const scale = new Animated.Value(1);
 
-    const onPressIn = () =>
+    const onPressIn = () => {
+      registerInteraction(); // Register button interaction for TalkBack timing
       Animated.spring(scale, { toValue: 0.96, useNativeDriver: true }).start();
+    };
     const onPressOut = () =>
       Animated.spring(scale, { toValue: 1, friction: 3, tension: 80, useNativeDriver: true }).start();
 

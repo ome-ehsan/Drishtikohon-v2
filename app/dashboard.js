@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import React, { useContext, useEffect } from 'react';
 import { Animated, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { AppContext } from '../context/AppContext';
-import { speak } from '../utils/speech';
+import { registerInteraction, speak } from '../utils/speech';
 import { t } from '../utils/translations';
 
 export default function DashboardScreen() {
@@ -29,6 +29,7 @@ export default function DashboardScreen() {
     const scale = new Animated.Value(1);
 
     const onPressIn = () => {
+      registerInteraction(); // Register button interaction for TalkBack timing
       Animated.spring(scale, {
         toValue: 0.96,
         useNativeDriver: true,

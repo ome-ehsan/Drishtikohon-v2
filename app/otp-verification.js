@@ -102,7 +102,7 @@ export default function OTPVerificationScreen() {
         setTimeout(() => {
           console.log('Navigating to dashboard...');
           router.replace('/dashboard');
-        }, 3000);
+        }, 5000);
 
       } else {
         console.log('Transaction failed:', result.error);

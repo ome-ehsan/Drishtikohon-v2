@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Animated, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, Vibration, View } from 'react-native';
 import { AppContext } from '../context/AppContext';
 import { playToneThenSpeak, stopAllAudio } from '../utils/audio';
-import { speak } from '../utils/speech';
+import { registerInteraction, speak } from '../utils/speech';
 import { t } from '../utils/translations';
 
 
@@ -84,8 +84,10 @@ export default function LoginScreen() {
   // Animated Keypad Button Component
   const KeyButton = ({ label, icon, onPress, accessibilityLabel, hint, invisible }) => {
     const scale = new Animated.Value(1);
-    const onPressIn = () =>
+    const onPressIn = () => {
+      registerInteraction(); // Register button interaction for TalkBack timing
       Animated.spring(scale, { toValue: 0.93, useNativeDriver: true }).start();
+    };
     const onPressOut = () =>
       Animated.spring(scale, { toValue: 1, friction: 3, useNativeDriver: true }).start();
 

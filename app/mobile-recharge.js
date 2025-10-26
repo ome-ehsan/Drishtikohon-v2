@@ -24,7 +24,7 @@ import robi from '../assets/operators/robi.png';
 import teletalk from '../assets/operators/teletalk.png';
 import { AppContext } from '../context/AppContext';
 import { playToneThenSpeak, stopAllAudio } from '../utils/audio';
-import { speak } from '../utils/speech';
+import { registerInteraction, speak } from '../utils/speech';
 import { t } from '../utils/translations';
 
 const OPERATORS = [
@@ -70,6 +70,7 @@ export default function MobileRechargeScreen() {
 
   // Handle phone number input with TTS feedback
   const handlePhoneNumberChange = (text) => {
+    registerInteraction(); // Register input interaction for TalkBack timing
     const cleanText = text.replace(/[^0-9]/g, '');
     setPhoneNumber(cleanText);
     setError('');
@@ -116,6 +117,7 @@ export default function MobileRechargeScreen() {
 
   // Handle amount input
   const handleAmountChange = (text) => {
+    registerInteraction(); // Register input interaction for TalkBack timing
     const cleanText = text.replace(/[^0-9]/g, '');
     setRechargeAmount(cleanText);
     setError('');
@@ -171,8 +173,10 @@ export default function MobileRechargeScreen() {
   // Animated Keypad Button Component for PIN
   const KeyButton = ({ label, icon, onPress, accessibilityLabel, hint, invisible }) => {
     const scale = new Animated.Value(1);
-    const onPressIn = () =>
+    const onPressIn = () => {
+      registerInteraction(); // Register button interaction for TalkBack timing
       Animated.spring(scale, { toValue: 0.93, useNativeDriver: true }).start();
+    };
     const onPressOut = () =>
       Animated.spring(scale, { toValue: 1, friction: 3, useNativeDriver: true }).start();
 
