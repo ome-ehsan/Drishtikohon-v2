@@ -181,5 +181,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
   <p><strong>Drishtikohon</strong> - Making mobile banking accessible for everyone</p>
-  <p>Built with ❤️ for the visually impaired community</p>
 </div>
