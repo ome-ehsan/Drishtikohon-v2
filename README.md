@@ -17,16 +17,16 @@ Drishtikohon (দৃষ্টিকোণ) is a comprehensive mobile banking app
 ## ✨ Key Features
 
 ### 🔐 **Authentication & Security**
-- **PIN-based Login**: Secure 4-digit PIN authentication with privacy-safe audio feedback
+- **Tone based PIN entry**: Secure tone based 4-digit PIN authentication.
+- **Tone Mode feature**: If turned on, TalkBack will refrain from announcing digits out loud.
 - **User Registration**: Phone number verification with OTP auto-fill simulation
 - **PIN Setup**: Guided PIN creation and confirmation process
 - **Screen Privacy**: Hide screen content for privacy while maintaining voice guidance
 
 ### 💰 **Banking Operations**
 - **Balance Inquiry**: Check account balance with voice announcements
-- **Send Money**: Transfer funds to other mobile numbers with OTP verification
-- **Mobile Recharge**: Recharge any mobile number with 5 major Bangladeshi operators
-- **Transaction History**: Track all transactions with detailed records
+- **Send Money**: Transfer funds to other mobile numbers with OTP verification (Visual Simulation)
+- **Mobile Recharge**: Recharge any mobile number with 5 major Bangladeshi operators (Visual Simulation)
 
 ### 🎯 **Accessibility Features**
 - **TalkBack/VoiceOver Integration**: Full screen reader support with automatic detection
@@ -42,7 +42,7 @@ Drishtikohon (দৃষ্টিকোণ) is a comprehensive mobile banking app
 - **Cultural Adaptation**: Region-specific operator support and currency display
 
 ### ⚙️ **Customization**
-- **Voice Speed Control**: Adjustable TTS rate (0.1x - 2.0x)
+- **Voice Speed Control**: Adjustable in-app TTS rate.
 - **Language Switching**: Real-time language change with persistence
 - **Accessibility Settings**: Comprehensive accessibility preferences
 
