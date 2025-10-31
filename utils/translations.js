@@ -14,6 +14,7 @@ export const translations = {
     securityNote: 'Security: Digits are not announced aloud',
     backspace: 'Backspace. Remove last digit',
     number: 'Number',
+    digit: 'Digit',
     
     // Dashboard
     dashboard: 'Dashboard',
@@ -50,6 +51,8 @@ export const translations = {
     backToDashboard: 'Going back to dashboard',
     languageChanged: 'Language changed to',
     settingsScreen: 'Settings screen',
+    maskTalkBackDigits: 'Mask TalkBack Digits',
+    maskTalkBackDigitsDescription: 'When enabled, TalkBack will announce "digit" instead of the actual number on PIN screens',
     
     // Send Money
     sendMoneyScreen: 'Send Money',
@@ -133,6 +136,7 @@ export const translations = {
     securityNote: 'নিরাপত্তা: ডিজিট জোরে পড়া হয় না',
     backspace: 'ব্যাকস্পেস। শেষ ডিজিট মুছুন',
     number: 'নম্বর',
+    digit: 'ডিজিট',
     
     // Dashboard
     dashboard: 'ড্যাশবোর্ড',
@@ -169,6 +173,8 @@ export const translations = {
     backToDashboard: 'ড্যাশবোর্ডে ফিরে যাচ্ছি',
     languageChanged: 'ভাষা পরিবর্তন করা হয়েছে',
     settingsScreen: 'সেটিংস স্ক্রিন',
+    maskTalkBackDigits: 'টকব্যাক ডিজিট মাস্ক করুন',
+    maskTalkBackDigitsDescription: 'সক্রিয় থাকলে, টকব্যাক পিন স্ক্রিনে প্রকৃত নম্বরের পরিবর্তে "ডিজিট" ঘোষণা করবে',
     
     // Mobile Recharge
     mobileRecharge: 'মোবাইল রিচার্জ',

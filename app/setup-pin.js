@@ -9,7 +9,7 @@ import { t } from '../utils/translations';
 
 export default function SetupPinScreen() {
   const router = useRouter();
-  const { language, setUserPin, voiceRate } = useContext(AppContext);
+  const { language, setUserPin, voiceRate, maskTalkBackDigits } = useContext(AppContext);
 
   const [stage, setStage] = useState('create'); // 'create' | 'confirm'
   const [pin, setPin] = useState('');
@@ -106,7 +106,12 @@ export default function SetupPinScreen() {
   const renderRow = (digits) => (
     <View style={styles.keypadRow}>
       {digits.map((d) => (
-        <KeyButton key={d} label={d} onPress={() => handleDigit(String(d))} accessibilityLabel={`${t('number', language)} ${d}`} />
+        <KeyButton 
+          key={d} 
+          label={d} 
+          onPress={() => handleDigit(String(d))} 
+          accessibilityLabel={maskTalkBackDigits ? t('digit', language) : `${t('number', language)} ${d}`} 
+        />
       ))}
     </View>
   );
@@ -138,7 +143,7 @@ export default function SetupPinScreen() {
         {renderRow([7, 8, 9])}
         <View style={styles.keypadRow}>
           <View style={styles.keyButtonPlaceholder} />
-          <KeyButton label={0} onPress={() => handleDigit('0')} accessibilityLabel={`${t('number', language)} 0`} />
+          <KeyButton label={0} onPress={() => handleDigit('0')} accessibilityLabel={maskTalkBackDigits ? t('digit', language) : `${t('number', language)} 0`} />
           <KeyButton label={'←'} onPress={handleBackspace} accessibilityLabel={t('backspace', language)} />
         </View>
       </View>

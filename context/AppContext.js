@@ -26,6 +26,7 @@ export const AppProvider = ({ children }) => {
   const [voiceRate, setVoiceRate] = useState(0.9); // TTS speed 0.1 - 1.5
   const [isRegistered, setIsRegistered] = useState(null); // null until loaded
   const [savedPin, setSavedPin] = useState(null);
+  const [maskTalkBackDigits, setMaskTalkBackDigits] = useState(false); // Mask TalkBack digit announcements
 
   // Check if TalkBack is enabled
   useEffect(() => {
@@ -82,6 +83,21 @@ export const AppProvider = ({ children }) => {
     loadVoiceRate();
   }, []);
 
+  // Load saved maskTalkBackDigits preference
+  useEffect(() => {
+    const loadMaskTalkBackDigits = async () => {
+      try {
+        const saved = await AsyncStorage.getItem('mask_talkback_digits');
+        if (saved !== null) {
+          setMaskTalkBackDigits(saved === 'true');
+        }
+      } catch (error) {
+        console.log('Error loading maskTalkBackDigits:', error);
+      }
+    };
+    loadMaskTalkBackDigits();
+  }, []);
+
   // Load registration status and PIN
   useEffect(() => {
     const loadAuthState = async () => {
@@ -116,6 +132,16 @@ export const AppProvider = ({ children }) => {
       setGlobalVoiceRate(clamped);
     } catch (error) {
       console.log('Error saving voice rate:', error);
+    }
+  };
+
+  // Save maskTalkBackDigits preference
+  const changeMaskTalkBackDigits = async (enabled) => {
+    try {
+      await AsyncStorage.setItem('mask_talkback_digits', String(enabled));
+      setMaskTalkBackDigits(enabled);
+    } catch (error) {
+      console.log('Error saving maskTalkBackDigits:', error);
     }
   };
 
@@ -224,7 +250,10 @@ export const AppProvider = ({ children }) => {
         isRegistered,
         completeRegistration,
         setUserPin,
-      hasPin: !!savedPin,
+        hasPin: !!savedPin,
+        // TalkBack digit masking
+        maskTalkBackDigits,
+        changeMaskTalkBackDigits,
       }}
     >
       {children}

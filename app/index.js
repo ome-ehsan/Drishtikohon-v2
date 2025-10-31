@@ -11,7 +11,7 @@ import { t } from '../utils/translations';
 
 export default function LoginScreen() {
   const router = useRouter();
-  const { language, validatePin, voiceRate, isRegistered, hasPin } = useContext(AppContext);
+  const { language, validatePin, voiceRate, isRegistered, hasPin, maskTalkBackDigits } = useContext(AppContext);
   const [pin, setPin] = useState('');
   const [error, setError] = useState('');
   const PIN_LENGTH = 4;
@@ -185,19 +185,19 @@ export default function LoginScreen() {
               <KeyButton
                 label={1}
                 onPress={() => handleNumberPress('1')}
-                accessibilityLabel={`${t('number', language)} 1`}
+                accessibilityLabel={maskTalkBackDigits ? t('digit', language) : `${t('number', language)} 1`}
                 hint={t('enterPin', language)}
               />
               <KeyButton
                 label={2}
                 onPress={() => handleNumberPress('2')}
-                accessibilityLabel={`${t('number', language)} 2`}
+                accessibilityLabel={maskTalkBackDigits ? t('digit', language) : `${t('number', language)} 2`}
                 hint={t('enterPin', language)}
               />
               <KeyButton
                 label={3}
                 onPress={() => handleNumberPress('3')}
-                accessibilityLabel={`${t('number', language)} 3`}
+                accessibilityLabel={maskTalkBackDigits ? t('digit', language) : `${t('number', language)} 3`}
                 hint={t('enterPin', language)}
               />
             </View>
@@ -206,19 +206,19 @@ export default function LoginScreen() {
               <KeyButton
                 label={4}
                 onPress={() => handleNumberPress('4')}
-                accessibilityLabel={`${t('number', language)} 4`}
+                accessibilityLabel={maskTalkBackDigits ? t('digit', language) : `${t('number', language)} 4`}
                 hint={t('enterPin', language)}
               />
               <KeyButton
                 label={5}
                 onPress={() => handleNumberPress('5')}
-                accessibilityLabel={`${t('number', language)} 5`}
+                accessibilityLabel={maskTalkBackDigits ? t('digit', language) : `${t('number', language)} 5`}
                 hint={t('enterPin', language)}
               />
               <KeyButton
                 label={6}
                 onPress={() => handleNumberPress('6')}
-                accessibilityLabel={`${t('number', language)} 6`}
+                accessibilityLabel={maskTalkBackDigits ? t('digit', language) : `${t('number', language)} 6`}
                 hint={t('enterPin', language)}
               />
             </View>
@@ -227,19 +227,19 @@ export default function LoginScreen() {
               <KeyButton
                 label={7}
                 onPress={() => handleNumberPress('7')}
-                accessibilityLabel={`${t('number', language)} 7`}
+                accessibilityLabel={maskTalkBackDigits ? t('digit', language) : `${t('number', language)} 7`}
                 hint={t('enterPin', language)}
               />
               <KeyButton
                 label={8}
                 onPress={() => handleNumberPress('8')}
-                accessibilityLabel={`${t('number', language)} 8`}
+                accessibilityLabel={maskTalkBackDigits ? t('digit', language) : `${t('number', language)} 8`}
                 hint={t('enterPin', language)}
               />
               <KeyButton
                 label={9}
                 onPress={() => handleNumberPress('9')}
-                accessibilityLabel={`${t('number', language)} 9`}
+                accessibilityLabel={maskTalkBackDigits ? t('digit', language) : `${t('number', language)} 9`}
                 hint={t('enterPin', language)}
               />
             </View>
@@ -249,7 +249,7 @@ export default function LoginScreen() {
               <KeyButton
                 label={0}
                 onPress={() => handleNumberPress('0')}
-                accessibilityLabel={`${t('number', language)} 0`}
+                accessibilityLabel={maskTalkBackDigits ? t('digit', language) : `${t('number', language)} 0`}
                 hint={t('enterPin', language)}
               />
               <KeyButton
