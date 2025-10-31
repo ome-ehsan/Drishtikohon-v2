@@ -30,6 +30,7 @@ Drishtikohon (দৃষ্টিকোণ) is a comprehensive mobile banking app
 
 ### 🎯 **Accessibility Features**
 - **TalkBack/VoiceOver Integration**: Full screen reader support with automatic detection
+- **Three finger tap**: A simple gesture where a three-finger tap immediately closes the app. Useful in security breach scenarios in public situations.
 - **Smart TTS Control**: Automatically disables in-app TTS when TalkBack is enabled
 - **Audio Feedback**: Privacy-safe digit tones + spoken progress for PIN entry
 - **Haptic Feedback**: Vibration patterns for different interactions
