@@ -334,8 +334,8 @@ export default function MobileRechargeScreen() {
           <View style={styles.inputContainer}>
             <Text 
               style={styles.label}
-              accessible={true}
-              accessibilityLabel={t('enterRechargeNumber', language)}
+              // accessible={true}
+              // accessibilityLabel={t('enterRechargeNumber', language)}
             >
               {t('enterRechargeNumber', language)}
             </Text>
@@ -343,7 +343,7 @@ export default function MobileRechargeScreen() {
               style={styles.input}
               value={phoneNumber}
               onChangeText={handlePhoneNumberChange}
-              placeholder="01XXXXXXXXX"
+              placeholder=""
               placeholderTextColor="#666666"
               keyboardType="phone-pad"
               maxLength={11}
@@ -417,7 +417,7 @@ export default function MobileRechargeScreen() {
                   style={styles.input}
                   value={rechargeAmount}
                   onChangeText={handleAmountChange}
-                  placeholder={language === 'en' ? 'Enter amount (10-1000)' : 'পরিমাণ লিখুন (১০-১০০০)'}
+                  placeholder={''}
                   placeholderTextColor="#666666"
                   keyboardType="numeric"
                   accessible={true}

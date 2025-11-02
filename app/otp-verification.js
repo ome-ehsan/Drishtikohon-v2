@@ -43,7 +43,7 @@ export default function OTPVerificationScreen() {
         console.log('Auto-verifying OTP after auto-fill...');
         handleVerifyOtp(mockOtp);
       }, 1500);
-    }, 2000);
+    }, 4000);
 
     return () => clearTimeout(autoFillTimer);
   }, []);

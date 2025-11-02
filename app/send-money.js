@@ -1,4 +1,5 @@
 // app/send-money.js - Send money with accessible input
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, Vibration, View } from 'react-native';
@@ -217,15 +218,16 @@ export default function SendMoneyScreen() {
             style={styles.backButton}
             onPress={handleBackPress}
             accessible={true}
-            accessibilityLabel={`${t('back', language)} button`}
+            accessibilityLabel={`${t('back', language)}`}
             accessibilityRole="button"
           >
-            <Text style={styles.backButtonText}>← {t('back', language)}</Text>
+            <MaterialCommunityIcons name="arrow-left" size={20} color="#FFFFFF" style={styles.backIcon} accessibilityElementsHidden importantForAccessibility="no" />
+            <Text style={styles.backButtonText}>{t('back', language)}</Text>
           </TouchableOpacity>
         </View>
 
         {/* Test Hint */}
-        <Text style={styles.testHint}>Test number: 01812345678</Text>
+        
       </View>
     </ScrollView>
   );
@@ -328,6 +330,11 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'row',
+    gap: 8,
+  },
+  backIcon: {
+    marginRight: 4,
   },
   backButtonText: {
     fontSize: 18,

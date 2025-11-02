@@ -102,7 +102,7 @@ export default function BalanceScreen() {
             
             <Text
               style={styles.balanceAmount}
-              accessibilityLabel={`${balance} ${t('taka', language)}`}
+              accessibilityLabel={`${t('yourBalance', language)} ${balance} ${t('taka', language)}`}
             >
               ৳ {balance.toLocaleString()}
             </Text>
@@ -128,8 +128,8 @@ export default function BalanceScreen() {
           onPress={handleToggleScreenHide}
           accessibilityLabel={
             isScreenHidden
-              ? `${t('showScreen', language)} button`
-              : `${t('hideScreen', language)} button`
+              ? `${t('showScreen', language)}`
+              : `${t('hideScreen', language)}`
           }
           hint="Toggle screen visibility for privacy"
         />
@@ -138,7 +138,7 @@ export default function BalanceScreen() {
           icon="arrow-left"
           label={t('back', language)}
           onPress={handleBackPress}
-          accessibilityLabel={`${t('back', language)} button`}
+          accessibilityLabel={`${t('back', language)}`}
           secondary
         />
       </View>
