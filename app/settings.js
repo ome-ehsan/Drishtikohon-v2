@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { Animated, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { AppContext } from '../context/AppContext';
 import { registerInteraction, speak } from '../utils/speech';
@@ -12,14 +12,14 @@ export default function SettingsScreen() {
   const { language, changeLanguage, voiceRate, changeVoiceRate, maskTalkBackDigits, changeMaskTalkBackDigits } = useContext(AppContext);
 
   useEffect(() => {
-    speak(t('settingsScreen', language), language, { rate: voiceRate });
+    const hint = language === 'bn' ? 'এক্সপ্লোর করতে নিচে সোয়াইপ করুন' : 'Swipe down to explore';
+    speak(`${t('settingsScreen', language)}. ${hint}`, language, { rate: voiceRate });
   }, []);
 
   const handleLanguageChange = (newLang) => {
     changeLanguage(newLang);
-    const message = `${t('languageChanged', language)} ${
-      newLang === 'en' ? t('english', language) : t('bangla', language)
-    }`;
+    const message = `${t('languageChanged', language)} ${newLang === 'en' ? t('english', language) : t('bangla', language)
+      }`;
     speak(message, newLang, { rate: voiceRate });
   };
 
@@ -59,7 +59,7 @@ export default function SettingsScreen() {
             <MaterialCommunityIcons
               name={icon}
               size={small ? 18 : 22}
-              color={active ? '#FFFFFF' : '#B0B0B0'}
+              color={active ? '#021d3f' : '#666666'}
               accessibilityElementsHidden
               importantForAccessibility="no"
             />
@@ -75,8 +75,12 @@ export default function SettingsScreen() {
 
   return (
     <LinearGradient colors={['#0f2027', '#203a43', '#2c5364']} style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContainer}>
-        
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={{ flex: 1 }}
+        contentContainerStyle={styles.scrollContainer}
+      >
+
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.title} accessible={true} accessibilityLabel={t('settings', language)}>
@@ -191,7 +195,7 @@ export default function SettingsScreen() {
           accessibilityHint="Navigate back to dashboard"
           style={({ pressed }) => [styles.backButton, pressed && { opacity: 0.7 }]}
         >
-          <MaterialCommunityIcons name="arrow-left" size={20} color="#FFFFFF" accessibilityElementsHidden importantForAccessibility="no" />
+          <MaterialCommunityIcons name="arrow-left" size={24} color="#021d3f" accessibilityElementsHidden importantForAccessibility="no" />
           <Text style={styles.backButtonText}>{t('back', language)}</Text>
         </Pressable>
 
@@ -210,103 +214,111 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   header: {
-    marginBottom: 36,
+    marginBottom: 40,
     alignItems: 'center',
   },
   title: {
-    fontSize: 32,
+    fontSize: 36, // Increased
     fontWeight: '700',
     color: '#FFFFFF',
     letterSpacing: 0.5,
   },
   section: {
-    marginBottom: 28,
+    marginBottom: 32,
   },
   sectionLabel: {
-    fontSize: 15,
-    fontWeight: '600',
-    color: '#FFFFFF',
-    marginBottom: 10,
-    opacity: 0.9,
+    fontSize: 22, // Increased
+    fontWeight: '700',
+    color: '#FFFFFF', // Pure White
+    marginBottom: 14,
+    opacity: 1,
   },
   sectionHint: {
-    fontSize: 13,
-    color: '#B0C4DE',
-    marginBottom: 10,
-    lineHeight: 18,
+    fontSize: 16, // Increased
+    color: '#DDDDDD',
+    marginBottom: 14,
+    lineHeight: 22,
   },
   optionsGroup: {
-    gap: 10,
+    gap: 16,
   },
   rowGroup: {
     flexDirection: 'row',
-    gap: 8,
+    gap: 12,
   },
   optionButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.06)',
-    borderRadius: 10,
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.15)',
-    gap: 10,
+    backgroundColor: '#FFFFFF', // Solid White
+    borderRadius: 16,
+    paddingVertical: 18,
+    paddingHorizontal: 20,
+    borderWidth: 0,
+    // borderColor: 'rgba(255, 255, 255, 0.15)',
+    gap: 14,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 4,
   },
   smallButton: {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.06)',
-    borderRadius: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 8,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.15)',
-    gap: 6,
-    minHeight: 70,
+    backgroundColor: '#FFFFFF', // Solid White
+    borderRadius: 16,
+    paddingVertical: 16,
+    paddingHorizontal: 10,
+    borderWidth: 0,
+    // borderColor: 'rgba(255, 255, 255, 0.15)',
+    gap: 8,
+    minHeight: 90,
+    elevation: 4,
   },
   optionButtonActive: {
-    backgroundColor: 'rgba(255, 255, 255, 0.12)',
-    borderColor: 'rgba(255, 255, 255, 0.4)',
+    backgroundColor: '#E6F0FF', // Very light blue to indicate active? Or just keep white.
+    borderWidth: 2,
+    borderColor: '#021d3f', // distinct border for active
   },
   optionButtonText: {
-    fontSize: 15,
-    fontWeight: '500',
-    color: '#CCCCCC',
+    fontSize: 20, // Increased
+    fontWeight: '600',
+    color: '#021d3f', // Dark Blue
     flex: 1,
   },
   smallButtonText: {
-    fontSize: 13,
-    fontWeight: '500',
-    color: '#CCCCCC',
+    fontSize: 18, // Increased
+    fontWeight: '600',
+    color: '#021d3f', // Dark Blue
     textAlign: 'center',
   },
   activeText: {
-    color: '#FFFFFF',
-    fontWeight: '600',
+    color: '#021d3f',
+    fontWeight: '800',
   },
   checkmark: {
-    fontSize: 16,
-    color: '#FFFFFF',
+    fontSize: 24,
+    color: '#021d3f', // Dark Blue
     fontWeight: '700',
   },
   backButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.08)',
-    borderRadius: 10,
-    paddingVertical: 14,
+    backgroundColor: '#FFFFFF', // Solid White
+    borderRadius: 16,
+    paddingVertical: 18,
     paddingHorizontal: 24,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.2)',
-    marginTop: 12,
-    gap: 8,
+    borderWidth: 0,
+    // borderColor: 'rgba(255, 255, 255, 0.2)',
+    marginTop: 20,
+    gap: 10,
+    elevation: 4,
   },
   backButtonText: {
-    fontSize: 15,
-    fontWeight: '600',
-    color: '#FFFFFF',
+    fontSize: 20, // Increased
+    fontWeight: '700',
+    color: '#021d3f', // Dark Blue
   },
 });
