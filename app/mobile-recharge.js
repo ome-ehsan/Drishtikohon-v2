@@ -2,7 +2,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   Animated,
   Image,
@@ -37,15 +37,15 @@ const OPERATORS = [
 
 export default function MobileRechargeScreen() {
   const router = useRouter();
-  const { 
-    language, 
-    isScreenReaderEnabled, 
-    validatePin, 
+  const {
+    language,
+    isScreenReaderEnabled,
+    validatePin,
     userBalance,
     processRechargeTransaction,
-    maskTalkBackDigits 
+    maskTalkBackDigits
   } = useContext(AppContext);
-  
+
   const [phoneNumber, setPhoneNumber] = useState('');
   const [selectedOperator, setSelectedOperator] = useState(null);
   const [showOperatorModal, setShowOperatorModal] = useState(false);
@@ -59,7 +59,7 @@ export default function MobileRechargeScreen() {
     const message = isScreenReaderEnabled
       ? t('mobileRechargeScreen', language)
       : `${t('mobileRechargeScreen', language)}. ${t('enterRechargeNumber', language)}`;
-    
+
     speak(message, language);
   }, []);
 
@@ -75,7 +75,7 @@ export default function MobileRechargeScreen() {
     const cleanText = text.replace(/[^0-9]/g, '');
     setPhoneNumber(cleanText);
     setError('');
-    
+
     if (cleanText.length > phoneNumber.length && cleanText.length <= 11) {
       speak(t('digitEntered', language), language);
     }
@@ -91,7 +91,7 @@ export default function MobileRechargeScreen() {
   const handleOperatorSelect = (operator) => {
     setSelectedOperator(operator);
     setShowOperatorModal(false);
-    
+
     const message = `${t(operator.name, language)} ${t('operatorSelected', language)}`;
     speak(message, language);
   };
@@ -104,14 +104,14 @@ export default function MobileRechargeScreen() {
       Vibration.vibrate([0, 100, 100, 100]);
       return;
     }
-    
+
     if (!isValidPhoneNumber(phoneNumber)) {
       setError('Please enter a valid 11-digit mobile number');
       speak('Please enter a valid 11-digit mobile number', language);
       Vibration.vibrate([0, 100, 100, 100]);
       return;
     }
-    
+
     setShowOperatorModal(true);
     speak(t('operatorListOpened', language), language);
   };
@@ -122,7 +122,7 @@ export default function MobileRechargeScreen() {
     const cleanText = text.replace(/[^0-9]/g, '');
     setRechargeAmount(cleanText);
     setError('');
-    
+
     if (cleanText.length > rechargeAmount.length && cleanText.length > 0) {
       speak(t('digitEntered', language), language);
     }
@@ -136,9 +136,9 @@ export default function MobileRechargeScreen() {
       Vibration.vibrate([0, 100, 100, 100]);
       return;
     }
-    
+
     const amount = parseInt(rechargeAmount);
-    
+
     if (isNaN(amount) || amount <= 0) {
       setError(t('amountMustBePositive', language));
       speak(t('amountMustBePositive', language), language);
@@ -159,14 +159,14 @@ export default function MobileRechargeScreen() {
       Vibration.vibrate([0, 100, 100, 100]);
       return;
     }
-    
+
     if (amount > userBalance) {
       setError(t('insufficientBalance', language));
       speak(t('insufficientBalance', language), language);
       Vibration.vibrate([0, 100, 100, 100]);
       return;
     }
-    
+
     setShowPinModal(true);
     speak(t('enterPin', language), language);
   };
@@ -219,12 +219,12 @@ export default function MobileRechargeScreen() {
       const newPin = pin + number;
       setPin(newPin);
       setError('');
-      
+
       Vibration.vibrate(50);
-      
+
       const message = `${t('digitEntered', language)}. ${newPin.length} ${t('digitsEntered', language)}`;
       playToneThenSpeak(parseInt(number, 10), message, language);
-      
+
       if (newPin.length === 4) {
         setTimeout(() => {
           handlePinSubmit(newPin);
@@ -238,7 +238,7 @@ export default function MobileRechargeScreen() {
       const newPin = pin.slice(0, -1);
       setPin(newPin);
       setError('');
-      
+
       Vibration.vibrate(50);
       stopAllAudio();
       speak(
@@ -250,16 +250,16 @@ export default function MobileRechargeScreen() {
 
   const handlePinSubmit = (pinToSubmit) => {
     speak(t('pinSubmitted', language), language);
-    
+
     setTimeout(() => {
       if (validatePin(pinToSubmit)) {
         const result = processRechargeTransaction(phoneNumber, parseInt(rechargeAmount), selectedOperator.name);
-        
+
         if (result.success) {
           Vibration.vibrate([0, 50, 50, 50]);
           const successMessage = `${t('rechargeSuccessful', language)}. ${rechargeAmount} ${t('taka', language)} ${t('onOperator', language)} ${t(selectedOperator.name, language)}`;
           speak(successMessage, language);
-          
+
           setTimeout(() => {
             router.replace('/dashboard');
           }, 6000);
@@ -298,7 +298,7 @@ export default function MobileRechargeScreen() {
           accessibilityLabel={accessibilityLabel}
           accessibilityRole="button"
         >
-          <MaterialCommunityIcons name={icon} size={24} color="#FFFFFF" />
+          <MaterialCommunityIcons name={icon} size={28} color="#021d3f" />
           <Text style={styles.actionButtonText}>{label}</Text>
         </TouchableOpacity>
       </Animated.View>
@@ -311,14 +311,14 @@ export default function MobileRechargeScreen() {
       style={styles.container}
     >
       <SafeAreaView style={styles.safeArea}>
-        <ScrollView 
+        <ScrollView
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
           {/* Header */}
           <View style={styles.headerContainer}>
-            <Text 
+            <Text
               style={styles.title}
               accessible={true}
               accessibilityLabel={t('mobileRechargeScreen', language)}
@@ -332,10 +332,10 @@ export default function MobileRechargeScreen() {
 
           {/* Phone Number Input */}
           <View style={styles.inputContainer}>
-            <Text 
+            <Text
               style={styles.label}
-              // accessible={true}
-              // accessibilityLabel={t('enterRechargeNumber', language)}
+            // accessible={true}
+            // accessibilityLabel={t('enterRechargeNumber', language)}
             >
               {t('enterRechargeNumber', language)}
             </Text>
@@ -344,7 +344,7 @@ export default function MobileRechargeScreen() {
               value={phoneNumber}
               onChangeText={handlePhoneNumberChange}
               placeholder=""
-              placeholderTextColor="#666666"
+              placeholderTextColor="#999999"
               keyboardType="phone-pad"
               maxLength={11}
               accessible={true}
@@ -355,7 +355,7 @@ export default function MobileRechargeScreen() {
 
           {/* Error Message */}
           {error && !showPinModal ? (
-            <Text 
+            <Text
               style={styles.errorText}
               accessible={true}
               accessibilityLabel={error}
@@ -382,7 +382,7 @@ export default function MobileRechargeScreen() {
           {selectedOperator && (
             <>
               <View style={styles.selectedOperatorCard}>
-                <Image 
+                <Image
                   source={selectedOperator.logo}
                   style={styles.selectedOperatorLogo}
                   accessible={false}
@@ -400,13 +400,13 @@ export default function MobileRechargeScreen() {
                   accessibilityLabel={language === 'en' ? 'Change operator' : 'অপারেটর পরিবর্তন করুন'}
                   accessibilityRole="button"
                 >
-                  <MaterialCommunityIcons name="pencil" size={20} color="#FFFFFF" />
+                  <MaterialCommunityIcons name="pencil" size={24} color="#021d3f" />
                 </TouchableOpacity>
               </View>
 
               {/* Amount Input */}
               <View style={styles.inputContainer}>
-                <Text 
+                <Text
                   style={styles.label}
                   accessible={true}
                   accessibilityLabel={t('enterRechargeAmount', language)}
@@ -418,14 +418,14 @@ export default function MobileRechargeScreen() {
                   value={rechargeAmount}
                   onChangeText={handleAmountChange}
                   placeholder={''}
-                  placeholderTextColor="#666666"
+                  placeholderTextColor="#999999"
                   keyboardType="numeric"
                   accessible={true}
                   accessibilityLabel={t('enterRechargeAmount', language)}
                   accessibilityHint="Enter recharge amount in taka"
                 />
               </View>
-              
+
               <TouchableOpacity
                 style={styles.primaryButton}
                 onPress={handleConfirmRecharge}
@@ -461,14 +461,14 @@ export default function MobileRechargeScreen() {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <Text 
+            <Text
               style={styles.modalTitle}
               accessible={true}
               accessibilityLabel={t('operatorSelection', language)}
             >
               {t('operatorSelection', language)}
             </Text>
-            
+
             <ScrollView showsVerticalScrollIndicator={false}>
               {OPERATORS.map((operator) => (
                 <Pressable
@@ -483,7 +483,7 @@ export default function MobileRechargeScreen() {
                   accessibilityLabel={`${t(operator.name, language)} operator button`}
                   accessibilityRole="button"
                 >
-                  <Image 
+                  <Image
                     source={operator.logo}
                     style={styles.operatorLogo}
                     accessible={false}
@@ -495,7 +495,7 @@ export default function MobileRechargeScreen() {
                 </Pressable>
               ))}
             </ScrollView>
-            
+
             <TouchableOpacity
               style={styles.closeModalButton}
               onPress={() => setShowOperatorModal(false)}
@@ -521,14 +521,14 @@ export default function MobileRechargeScreen() {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.pinModalContent}>
-            <Text 
+            <Text
               style={styles.modalTitle}
               accessible={true}
               accessibilityLabel={t('enterPin', language)}
             >
               {t('enterPin', language)}
             </Text>
-            
+
             {/* Transaction Summary */}
             <View style={styles.transactionSummary}>
               <Text style={styles.summaryLabel}>
@@ -546,7 +546,7 @@ export default function MobileRechargeScreen() {
                 {error}
               </Text>
             ) : null}
-            
+
             {/* PIN Display */}
             <View style={styles.pinDisplay}>
               {[0, 1, 2, 3].map((index) => (
@@ -559,7 +559,7 @@ export default function MobileRechargeScreen() {
                 />
               ))}
             </View>
-            
+
             {/* Keypad */}
             <View style={styles.keypadContainer}>
               <View style={styles.keypadRow}>
@@ -654,122 +654,129 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     padding: 20,
-    paddingTop: 60,
+    paddingTop: 80, // Increased from 60 to push content down
     paddingBottom: 40,
   },
   headerContainer: {
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 30,
   },
   title: {
-    fontSize: 24,
+    fontSize: 32, // Increased
     fontWeight: '900',
     color: '#FFFFFF',
     letterSpacing: 1.2,
     textTransform: 'uppercase',
     textAlign: 'center',
-    marginBottom: 6,
+    marginBottom: 10,
   },
   subtitle: {
-    fontSize: 13,
-    color: '#B0C4DE',
+    fontSize: 18, // Increased
+    color: '#FFFFFF', // Pure White
     letterSpacing: 0.5,
     textAlign: 'center',
   },
   inputContainer: {
-    marginBottom: 15,
+    marginBottom: 20,
   },
   label: {
-    fontSize: 15,
-    color: '#B0C4DE',
-    marginBottom: 8,
+    fontSize: 20, // Increased
+    color: '#FFFFFF', // Pure White
+    marginBottom: 10,
     fontWeight: '600',
     letterSpacing: 0.5,
   },
   input: {
-    backgroundColor: 'rgba(255, 255, 255, 0.08)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.25)',
-    borderRadius: 12,
-    paddingVertical: 14,
+    backgroundColor: '#FFFFFF', // Solid White
+    borderWidth: 0,
+    // borderColor: 'rgba(255,255,255,0.25)',
+    borderRadius: 16,
+    paddingVertical: 18,
     paddingHorizontal: 18,
-    fontSize: 17,
-    color: '#FFFFFF',
+    fontSize: 22,
+    color: '#021d3f', // Dark Blue
     fontWeight: '600',
+    elevation: 4,
   },
   primaryButton: {
-    backgroundColor: 'rgba(255, 255, 255, 0.08)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.25)',
-    borderRadius: 12,
-    paddingVertical: 14,
+    backgroundColor: '#FFFFFF', // Solid White
+    borderWidth: 0,
+    // borderColor: 'rgba(255,255,255,0.25)',
+    borderRadius: 16,
+    paddingVertical: 18,
     alignItems: 'center',
-    marginTop: 8,
+    marginTop: 10,
+    elevation: 5,
   },
   primaryButtonText: {
-    fontSize: 17,
+    fontSize: 26,
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: '#021d3f', // Dark Blue
     letterSpacing: 0.8,
   },
   selectedOperatorCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(74, 222, 128, 0.15)',
-    borderWidth: 1,
-    borderColor: 'rgba(74, 222, 128, 0.3)',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 15,
+    backgroundColor: '#FFFFFF', // Solid White
+    borderWidth: 0,
+    // borderColor: 'rgba(74, 222, 128, 0.3)',
+    borderRadius: 16,
+    padding: 20,
+    marginBottom: 20,
     gap: 12,
+    elevation: 4,
   },
   selectedOperatorLogo: {
-    width: 40,
-    height: 40,
+    width: 48,
+    height: 48,
     borderRadius: 8,
     resizeMode: 'contain',
   },
   selectedOperatorText: {
     flex: 1,
-    fontSize: 18,
-    color: '#FFFFFF',
+    fontSize: 22,
+    color: '#021d3f', // Dark Blue
     fontWeight: '700',
   },
   changeOperatorButton: {
-    padding: 8,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: 8,
+    padding: 10,
+    backgroundColor: '#E0E0E0', // Light Grey for visibility on White
+    borderRadius: 10,
   },
   backButtonContainer: {
-    marginTop: 20,
+    marginTop: 30,
     alignItems: 'flex-start',
   },
   actionButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.08)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.25)',
-    borderRadius: 12,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    gap: 8,
+    backgroundColor: '#FFFFFF', // Solid White
+    borderWidth: 0,
+    // borderColor: 'rgba(255,255,255,0.25)',
+    borderRadius: 16,
+    paddingVertical: 16,
+    paddingHorizontal: 24,
+    gap: 10,
+    elevation: 4,
   },
   actionButtonSecondary: {
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    backgroundColor: '#FFFFFF',
   },
   actionButtonText: {
-    fontSize: 16,
+    fontSize: 26,
     fontWeight: '600',
-    color: '#FFFFFF',
+    color: '#021d3f', // Dark Blue
     letterSpacing: 0.5,
   },
   errorText: {
-    fontSize: 15,
+    fontSize: 16,
     color: '#FF4C4C',
     textAlign: 'center',
     fontWeight: '700',
     marginBottom: 12,
+    backgroundColor: 'rgba(0,0,0,0.2)',
+    padding: 8,
+    borderRadius: 6,
   },
   modalOverlay: {
     flex: 1,

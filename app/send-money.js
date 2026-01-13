@@ -1,7 +1,7 @@
 // app/send-money.js - Send money with accessible input
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, Vibration, View } from 'react-native';
 import { AppContext } from '../context/AppContext';
 import { speak } from '../utils/speech';
@@ -11,7 +11,7 @@ export default function SendMoneyScreen() {
   const router = useRouter();
   const { language, isScreenReaderEnabled, getBalance } = useContext(AppContext);
   const errorRef = useRef(null);
-  
+
   const [receiverNumber, setReceiverNumber] = useState('');
   const [amount, setAmount] = useState('');
   const [error, setError] = useState('');
@@ -120,7 +120,7 @@ export default function SendMoneyScreen() {
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
         {/* Title */}
-        <Text 
+        <Text
           style={styles.title}
           accessible={true}
           accessibilityLabel={t('sendMoneyScreen', language)}
@@ -130,7 +130,7 @@ export default function SendMoneyScreen() {
 
         {/* Current Balance Display */}
         <View style={styles.balanceInfo}>
-          <Text 
+          <Text
             style={styles.balanceLabel}
             accessible={true}
             accessibilityLabel={`${t('yourBalance', language)} ${getBalance()} ${t('taka', language)}`}
@@ -141,7 +141,7 @@ export default function SendMoneyScreen() {
 
         {/* Error Message */}
         {error && (
-          <Text 
+          <Text
             ref={errorRef}
             style={styles.errorText}
             accessible={true}
@@ -155,7 +155,7 @@ export default function SendMoneyScreen() {
 
         {/* Receiver Number Input */}
         <View style={styles.inputContainer}>
-          <Text 
+          <Text
             style={styles.inputLabel}
             accessible={false}
             importantForAccessibility="no"
@@ -167,7 +167,7 @@ export default function SendMoneyScreen() {
             value={receiverNumber}
             onChangeText={handleReceiverChange}
             placeholder="01XXXXXXXXX"
-            placeholderTextColor="#555555"
+            placeholderTextColor="#999999"
             keyboardType="numeric"
             maxLength={11}
             accessible={true}
@@ -180,7 +180,7 @@ export default function SendMoneyScreen() {
 
         {/* Amount Input */}
         <View style={styles.inputContainer}>
-          <Text 
+          <Text
             style={styles.inputLabel}
             accessible={false}
             importantForAccessibility="no"
@@ -192,7 +192,7 @@ export default function SendMoneyScreen() {
             value={amount}
             onChangeText={handleAmountChange}
             placeholder="0"
-            placeholderTextColor="#555555"
+            placeholderTextColor="#999999"
             keyboardType="numeric"
             accessible={true}
             accessibilityLabel={t('enterAmount', language)}
@@ -221,13 +221,13 @@ export default function SendMoneyScreen() {
             accessibilityLabel={`${t('back', language)}`}
             accessibilityRole="button"
           >
-            <MaterialCommunityIcons name="arrow-left" size={20} color="#FFFFFF" style={styles.backIcon} accessibilityElementsHidden importantForAccessibility="no" />
+            <MaterialCommunityIcons name="arrow-left" size={24} color="#021d3f" style={styles.backIcon} accessibilityElementsHidden importantForAccessibility="no" />
             <Text style={styles.backButtonText}>{t('back', language)}</Text>
           </TouchableOpacity>
         </View>
 
         {/* Test Hint */}
-        
+
       </View>
     </ScrollView>
   );
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0f2027', // same gradient background logic can also be applied
   },
   title: {
-    fontSize: 32,
+    fontSize: 34,
     fontWeight: '900',
     color: '#FFFFFF',
     letterSpacing: 2,
@@ -254,96 +254,113 @@ const styles = StyleSheet.create({
   },
   balanceInfo: {
     width: '100%',
-    maxWidth: 320,
-    backgroundColor: 'rgba(255,255,255,0.08)',
-    borderRadius: 16,
-    padding: 20,
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.25)',
-    marginBottom: 24,
+    maxWidth: 340,
+    backgroundColor: '#FFFFFF', // Solid White
+    borderRadius: 18,
+    padding: 24,
+    borderWidth: 0,
+    // borderColor: 'rgba(255,255,255,0.25)',
+    marginBottom: 30,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 5,
+    elevation: 6,
   },
   balanceLabel: {
-    fontSize: 18,
-    color: '#FFFFFF',
+    fontSize: 26,
+    color: '#021d3f', // Dark Blue
     fontWeight: '700',
   },
   errorText: {
-    fontSize: 16,
-    color: '#FF4C4C',
+    fontSize: 26,
+    color: '#FF4C4C', // Keep red for error, maybe brighter?
     marginBottom: 16,
     textAlign: 'center',
     fontWeight: '700',
+    backgroundColor: 'rgba(0,0,0,0.2)', // Add background for readability?
+    padding: 10,
+    borderRadius: 8,
   },
   inputContainer: {
     width: '100%',
-    maxWidth: 320,
-    marginBottom: 20,
+    maxWidth: 340,
+    marginBottom: 24,
   },
   inputLabel: {
-    fontSize: 18,
-    color: '#B0C4DE',
-    marginBottom: 8,
+    fontSize: 20,
+    color: '#FFFFFF', // Pure White
+    marginBottom: 10,
     fontWeight: '600',
   },
   input: {
     width: '100%',
-    backgroundColor: 'rgba(255,255,255,0.08)',
-    borderRadius: 14,
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.25)',
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    fontSize: 20,
-    color: '#FFFFFF',
+    backgroundColor: '#FFFFFF', // Solid White
+    borderRadius: 16,
+    borderWidth: 0,
+    // borderColor: 'rgba(255,255,255,0.25)',
+    paddingHorizontal: 20,
+    paddingVertical: 18,
+    fontSize: 22,
+    color: '#021d3f', // Dark Blue
+    fontWeight: '600',
+    elevation: 4,
   },
   helperText: {
     fontSize: 14,
-    color: '#A0A0A0',
+    color: '#DDDDDD',
     marginTop: 6,
   },
   buttonContainer: {
     width: '100%',
-    maxWidth: 320,
-    marginTop: 20,
-    gap: 12,
+    maxWidth: 340,
+    marginTop: 30,
+    gap: 16,
   },
   confirmButton: {
-    backgroundColor: 'rgba(255,255,255,0.08)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.25)',
-    borderRadius: 16,
-    paddingVertical: 18,
+    backgroundColor: '#FFFFFF', // Solid White
+    borderWidth: 0,
+    // borderColor: 'rgba(255,255,255,0.25)',
+    borderRadius: 18,
+    paddingVertical: 20,
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 6,
   },
   confirmButtonText: {
-    fontSize: 20,
+    fontSize: 26,
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: '#021d3f', // Dark Blue
   },
   backButton: {
-    backgroundColor: 'rgba(255,255,255,0.05)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.15)',
-    borderRadius: 16,
-    paddingVertical: 16,
+    backgroundColor: '#FFFFFF', // Solid White
+    borderWidth: 0,
+    // borderColor: 'rgba(255,255,255,0.15)',
+    borderRadius: 18,
+    paddingVertical: 18,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
     gap: 8,
+    elevation: 4,
   },
   backIcon: {
     marginRight: 4,
+    // Icon color handled in component prop
   },
   backButtonText: {
-    fontSize: 18,
+    fontSize: 26,
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: '#021d3f', // Dark Blue
   },
   testHint: {
-    fontSize: 12,
-    color: '#555555',
+    fontSize: 14,
+    color: '#BBBBBB',
     marginTop: 20,
     textAlign: 'center',
   },
