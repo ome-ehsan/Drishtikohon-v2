@@ -201,7 +201,7 @@ export default function MobileRechargeScreen() {
             <MaterialCommunityIcons
               name={icon}
               size={34}
-              color="#FFFFFF"
+              color="#021d3f"
               accessibilityElementsHidden
               importantForAccessibility="no"
             />
@@ -857,41 +857,45 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   transactionSummary: {
-    backgroundColor: 'rgba(255, 255, 255, 0.08)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.25)',
-    borderRadius: 12,
-    padding: 16,
+    backgroundColor: '#FFFFFF', // Solid White
+    borderWidth: 0,
+    // borderColor: 'rgba(255,255,255,0.25)',
+    borderRadius: 16,
+    padding: 20,
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 24,
+    width: '100%',
+    elevation: 4,
   },
   summaryLabel: {
-    fontSize: 13,
-    color: '#B0C4DE',
-    marginBottom: 8,
+    fontSize: 15,
+    color: '#666666', // Grey for labels
+    marginBottom: 6,
     letterSpacing: 0.5,
+    fontWeight: '600',
   },
   summaryAmount: {
-    fontSize: 32,
+    fontSize: 36,
     fontWeight: '900',
-    color: '#FFFFFF',
+    color: '#021d3f', // Dark Blue
     marginBottom: 8,
   },
   summaryReceiver: {
-    fontSize: 14,
-    color: '#B0C4DE',
+    fontSize: 16,
+    color: '#021d3f', // Dark Blue
     letterSpacing: 0.5,
+    fontWeight: '600',
   },
   pinDisplay: {
     flexDirection: 'row',
     justifyContent: 'center',
     marginBottom: 30,
-    gap: 16,
+    gap: 20,
   },
   pinDot: {
-    width: 18,
-    height: 18,
-    borderRadius: 9,
+    width: 20,
+    height: 20,
+    borderRadius: 10,
     borderWidth: 2,
     borderColor: '#FFFFFF',
     backgroundColor: 'transparent',
@@ -901,30 +905,31 @@ const styles = StyleSheet.create({
   },
   keypadContainer: {
     alignItems: 'center',
-    gap: 12,
+    gap: 16,
   },
   keypadRow: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: 16,
+    gap: 20,
   },
   keyButton: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: 'rgba(255, 255, 255, 0.08)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.25)',
+    width: 90,
+    height: 90,
+    borderRadius: 45,
+    backgroundColor: '#FFFFFF', // Solid White
+    borderWidth: 0,
+    // borderColor: 'rgba(255,255,255,0.25)',
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.25,
-    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 8,
   },
   keyButtonText: {
-    fontSize: 28,
+    fontSize: 34,
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: '#021d3f', // Dark Blue
   },
 });

@@ -2,7 +2,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Animated, SafeAreaView, StyleSheet, Text, TouchableOpacity, Vibration, View } from 'react-native';
 import { AppContext } from '../context/AppContext';
 import { speak } from '../utils/speech';
@@ -13,12 +13,12 @@ export default function OTPVerificationScreen() {
   const params = useLocalSearchParams();
   const { receiverNumber, amount } = params;
 
-  const { 
-    language, 
-    validateOtp, 
-    processTransaction, 
+  const {
+    language,
+    validateOtp,
+    processTransaction,
     mockOtp,
-    userPhoneNumber 
+    userPhoneNumber
   } = useContext(AppContext);
 
   const [otp, setOtp] = useState('');
@@ -36,7 +36,7 @@ export default function OTPVerificationScreen() {
       setOtp(mockOtp);
       setIsAutoFilled(true);
       Vibration.vibrate(50);
-      
+
       speak(t('otpAutoFilled', language), language);
 
       setTimeout(() => {
@@ -54,7 +54,7 @@ export default function OTPVerificationScreen() {
       const newOtp = otp + number;
       setOtp(newOtp);
       setError('');
-      
+
       Vibration.vibrate(30);
 
       speak(
@@ -74,7 +74,7 @@ export default function OTPVerificationScreen() {
       const newOtp = otp.slice(0, -1);
       setOtp(newOtp);
       setError('');
-      
+
       Vibration.vibrate(30);
       speak(
         `${t('digitRemoved', language)}. ${newOtp.length} ${t('digitsRemaining', language)}`,
@@ -94,11 +94,11 @@ export default function OTPVerificationScreen() {
       if (result.success) {
         console.log('Transaction successful, announcing success message...');
         Vibration.vibrate([0, 50, 50, 50]);
-        
+
         const successMessage = `${t('transactionSuccessful', language)}. ${t('youSent', language)} ${amount} ${t('taka', language)}`;
         console.log('Success message:', successMessage);
         speak(successMessage, language, { rate: 0.85 });
-        
+
         setTimeout(() => {
           console.log('Navigating to dashboard...');
           router.replace('/dashboard');
@@ -164,7 +164,7 @@ export default function OTPVerificationScreen() {
             <MaterialCommunityIcons
               name={icon}
               size={34}
-              color="#FFFFFF"
+              color="#021d3f"
               accessibilityElementsHidden
               importantForAccessibility="no"
             />
@@ -192,7 +192,7 @@ export default function OTPVerificationScreen() {
             >
               {t('otpVerification', language)}
             </Text>
-            
+
             {/* Transaction Info */}
             <View style={styles.infoCard}>
               <Text style={styles.infoLabel}>
@@ -216,7 +216,7 @@ export default function OTPVerificationScreen() {
 
             {/* Auto-fill indicator */}
             {isAutoFilled && (
-              <Text 
+              <Text
                 style={styles.autoFillText}
                 accessible={true}
                 accessibilityLabel={t('otpAutoFilled', language)}
@@ -342,8 +342,8 @@ export default function OTPVerificationScreen() {
               accessible={true}
               accessibilityLabel="OTP will auto-fill from SMS"
             >
-              {language === 'en' 
-                ? 'OTP will auto-fill from SMS' 
+              {language === 'en'
+                ? 'OTP will auto-fill from SMS'
                 : 'ওটিপি এসএমএস থেকে স্বয়ংক্রিয়ভাবে পূরণ হবে'}
             </Text>
 
@@ -372,72 +372,79 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   title: {
-    fontSize: 28,
+    fontSize: 32, // Increased
     fontWeight: '900',
     color: '#FFFFFF',
     letterSpacing: 1.5,
     textTransform: 'uppercase',
-    marginBottom: 16,
+    marginBottom: 20,
   },
   infoCard: {
-    backgroundColor: 'rgba(255, 255, 255, 0.08)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.25)',
+    backgroundColor: '#FFFFFF', // Solid White
+    borderWidth: 0,
+    // borderColor: 'rgba(255,255,255,0.25)',
     borderRadius: 16,
-    padding: 16,
+    padding: 20,
     width: '100%',
-    maxWidth: 320,
+    maxWidth: 340,
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 20,
+    elevation: 4,
   },
   infoLabel: {
-    fontSize: 13,
-    color: '#B0C4DE',
-    marginBottom: 8,
+    fontSize: 15,
+    color: '#666666', // Grey for label
+    marginBottom: 6,
     letterSpacing: 0.5,
+    fontWeight: '600',
   },
   infoAmount: {
-    fontSize: 32,
+    fontSize: 36, // Large Amount
     fontWeight: '900',
-    color: '#FFFFFF',
+    color: '#021d3f', // Dark Blue
     marginBottom: 8,
   },
   infoReceiver: {
-    fontSize: 14,
-    color: '#B0C4DE',
+    fontSize: 16,
+    color: '#021d3f', // Dark Blue
     letterSpacing: 0.5,
+    fontWeight: '600',
   },
   subtitle: {
-    fontSize: 16,
-    color: '#B0C4DE',
-    marginTop: 8,
+    fontSize: 18,
+    color: '#E0E0E0',
+    marginTop: 10,
     textAlign: 'center',
     letterSpacing: 0.5,
   },
   autoFillText: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#4ADE80',
-    marginTop: 8,
+    marginTop: 12,
     fontWeight: '700',
     letterSpacing: 0.5,
   },
   errorText: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#FF4C4C',
     textAlign: 'center',
     fontWeight: '700',
     marginTop: -10,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 5,
   },
   otpDisplay: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: 16,
-    marginVertical: 20,
+    gap: 20,
+    marginVertical: 30,
   },
   otpDot: {
-    width: 18,
-    height: 18,
-    borderRadius: 9,
+    width: 20,
+    height: 20,
+    borderRadius: 10,
     borderWidth: 2,
     borderColor: '#FFFFFF',
     backgroundColor: 'transparent',
@@ -447,45 +454,46 @@ const styles = StyleSheet.create({
   },
   keypadContainer: {
     alignItems: 'center',
-    gap: 12,
+    gap: 16,
   },
   keypadRow: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: 16,
+    gap: 20,
   },
   keyButton: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: 'rgba(255, 255, 255, 0.08)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.25)',
+    width: 90,
+    height: 90,
+    borderRadius: 45,
+    backgroundColor: '#FFFFFF', // Solid White
+    borderWidth: 0,
+    // borderColor: 'rgba(255,255,255,0.25)',
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.25,
-    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 8,
   },
   keyButtonText: {
-    fontSize: 28,
+    fontSize: 34,
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: '#021d3f', // Dark Blue
   },
   footer: {
     alignItems: 'center',
-    paddingBottom: 10,
+    paddingBottom: 20,
   },
   helpText: {
-    fontSize: 13,
-    color: '#A0A0A0',
+    fontSize: 14,
+    color: '#CCCCCC',
     textAlign: 'center',
     paddingHorizontal: 20,
     marginBottom: 8,
   },
   testHint: {
-    fontSize: 12,
-    color: '#555555',
+    fontSize: 14,
+    color: '#888888',
   },
 });
