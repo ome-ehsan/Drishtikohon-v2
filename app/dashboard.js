@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { Animated, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { AppContext } from '../context/AppContext';
 import { registerInteraction, speak } from '../utils/speech';
@@ -62,8 +62,8 @@ export default function DashboardScreen() {
         >
           <MaterialCommunityIcons
             name={icon}
-            size={36}
-            color="#FFFFFF"
+            size={40} // Increased from 36
+            color="#021d3f" // Changed from #FFFFFF
             accessibilityElementsHidden
             importantForAccessibility="no"
           />
@@ -79,16 +79,16 @@ export default function DashboardScreen() {
       style={styles.container}
     >
       <View style={styles.headerContainer}>
-      <Image
-  source={require("../assets/images/appIcon2.png")}
-  style={{
-    width: 40,
-    height: 40,
-    marginBottom: 8,
-    //tintColor: "#FFFFFF", // optional if you want to colorize like the icon
-  }}
-  accessibilityElementsHidden
-/>
+        <Image
+          source={require("../assets/images/appIcon2.png")}
+          style={{
+            width: 40,
+            height: 40,
+            marginBottom: 8,
+            //tintColor: "#FFFFFF", // optional if you want to colorize like the icon
+          }}
+          accessibilityElementsHidden
+        />
         <Text
           style={styles.title}
           accessible={true}
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 42,
+    fontSize: 45,
     fontWeight: '900',
     color: '#FFFFFF',
     letterSpacing: 2,
@@ -176,22 +176,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    backgroundColor: '#FFFFFF',
     borderRadius: 18,
-    paddingVertical: 22,
-    paddingHorizontal: 20,
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.25)',
+    paddingVertical: 24, // Increased padding
+    paddingHorizontal: 22,
+    borderWidth: 0, // Removed border as solid white is strong enough, or keep for definition? User said "strong circular outlines" for Pin screen, here "solid white".
+    // borderColor: 'rgba(255,255,255,0.25)', // Removed
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.25,
-    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 6, // Added for Android
   },
   buttonText: {
-    fontSize: 20,
+    fontSize: 27, // Increased from 20
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: '#021d3f', // Changed from #FFFFFF
     marginLeft: 16,
-    letterSpacing: 1,
+    letterSpacing: 0.5,
   },
 });

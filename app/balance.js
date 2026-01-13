@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
 import { AppContext } from '../context/AppContext';
 import { registerInteraction, speak } from '../utils/speech';
@@ -67,8 +67,8 @@ export default function BalanceScreen() {
         >
           <MaterialCommunityIcons
             name={icon}
-            size={32}
-            color="#FFFFFF"
+            size={36} // Increased from 32
+            color="#021d3f" // Changed from #FFFFFF
             accessibilityElementsHidden
             importantForAccessibility="no"
           />
@@ -99,7 +99,7 @@ export default function BalanceScreen() {
               style={{ marginBottom: 10 }}
               accessibilityElementsHidden
             />
-            
+
             <Text
               style={styles.balanceAmount}
               accessibilityLabel={`${t('yourBalance', language)} ${balance} ${t('taka', language)}`}
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontSize: 36,
+    fontSize: 50,
     fontWeight: '900',
     color: '#FFFFFF',
     letterSpacing: 2,
@@ -201,29 +201,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 18,
-    paddingVertical: 22,
-    paddingHorizontal: 20,
+    paddingVertical: 24,
+    paddingHorizontal: 22,
+    elevation: 5,
   },
   buttonPrimary: {
-    backgroundColor: 'rgba(255,255,255,0.08)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.25)',
+    backgroundColor: '#FFFFFF',
+    borderWidth: 0,
     shadowColor: '#000',
-    shadowOpacity: 0.25,
-    shadowOffset: { width: 0, height: 6 },
-    shadowRadius: 10,
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 5,
   },
   buttonSecondary: {
-    backgroundColor: 'rgba(255,255,255,0.05)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.15)',
+    backgroundColor: '#FFFFFF', // Changed from secondary transparent
+    borderWidth: 0,
+    marginTop: 10, // Add spacing if they are stacked
   },
   buttonText: {
-    fontSize: 20,
+    fontSize: 28, // Increased from 20
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: '#021d3f', // Changed from #FFFFFF
     marginLeft: 14,
-    letterSpacing: 1,
+    letterSpacing: 0.5,
   },
   hiddenIndicator: {
     alignItems: 'center',
